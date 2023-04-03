@@ -24,5 +24,11 @@ jobs:
       - name: add lombok
         run: |
           sed -i "/dependencies {/a\annotationProcessor 'org.projectlombok:lombok:1.18.12'" build.gradle
+      - name: build gradle.properties
+        run: |
+          echo "org.gradle.daemon=true" >> gradle.properties
+          echo "org.gradle.jvmargs=-Xmx4096m -XX:MaxPermSize=4096m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8" >> gradle.properties
+          echo "org.gradle.parallel=true" >> gradle.properties
+          echo "org.gradle.configureondemand=true" >> gradle.properties
       - name: Run build with Gradle Wrapper
         run: ./gradlew clean build --parallel -x test
